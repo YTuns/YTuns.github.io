@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT的空间</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0a0a1a;
+            color: #00fffc;
+        }
+
+        /* 赛博朋克网格背景 */
+        #grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(rgba(0, 255, 252, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 252, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* 霓虹灯效果 */
+        .neon-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00fffc, transparent);
+            box-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
+            animation: neonMove 15s linear infinite;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        @keyframes neonMove {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* 标题区域 */
+        #header {
+            height: calc(100vh / 7);
+            width: 33.33%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 2px solid #00fffc;
+            box-shadow: 0 0 15px #00fffc, inset 0 0 15px #00fffc;
+            background-color: rgba(10, 10, 26, 0.7);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .title {
+            font-size: 4vw;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
+            position: relative;
+            padding: 15px 30px;
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                text-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
+            }
+            100% {
+                text-shadow: 0 0 15px #00fffc, 0 0 30px #00fffc, 0 0 40px #00fffc;
+            }
+        }
+
+        /* 游戏分类区域 */
+        .game-category {
+            position: absolute;
+            top: 25%;
+            width: 35%;
+            height: 60vh;
+            padding: 20px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff, inset 0 0 15px #ff00ff;
+            background-color: rgba(10, 10, 26, 0.7);
+            border-radius: 5px;
+            animation: neonBorderPulse 2s ease-in-out infinite alternate;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 左侧分类栏 */
+        #left-category {
+            left: 10%;
+        }
+
+        /* 右侧分类栏 */
+        #right-category {
+            right: 10%;
+        }
+
+        @keyframes neonBorderPulse {
+            0% {
+                box-shadow: 0 0 10px #ff00ff, inset 0 0 10px #ff00ff;
+                border-color: #ff00ff;
+            }
+            100% {
+                box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff;
+                border-color: #00fffc;
+            }
+        }
+
+        .category-title {
+            font-size: 2vw;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* 游戏按钮容器 */
+        .game-buttons {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 游戏按钮 */
+        .game-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            max-width: 250px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: rgba(0, 255, 252, 0.1);
+            border: 2px solid #00fffc;
+            color: #00fffc;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2vw;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 255, 252, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-btn:hover {
+            background-color: rgba(0, 255, 252, 0.3);
+            box-shadow: 0 0 20px #00fffc;
+            transform: translateY(-3px);
+        }
+
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                transparent,
+                rgba(0, 255, 252, 0.1),
+                transparent,
+                transparent,
+                transparent
+            );
+            transform: rotate(30deg);
+            animation: btnGlow 3s linear infinite;
+        }
+
+        @keyframes btnGlow {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 150%;
+            }
+        }
+
+        /* 敬请期待文字 */
+        .coming-soon {
+            margin-top: auto;
+            padding: 20px 0;
+            font-style: italic;
+            font-size: 1.5vw;
+            text-align: center;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            transform: skewX(-15deg);
+            animation: comingSoonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes comingSoonPulse {
+            0% {
+                opacity: 0.7;
+                text-shadow: 0 0 10px #ff00ff;
+            }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            }
+        }
+
+        /* 数据流效果 */
+        .data-stream {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .data-bit {
+            position: absolute;
+            color: rgba(0, 255, 252, 0.7);
+            font-size: 16px;
+            animation: dataFall linear infinite;
+        }
+
+        @keyframes dataFall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="grid-bg"></div>
+    <div class="data-stream" id="dataStream"></div>
+    
+    <!-- 动态霓虹灯线条将通过JS生成 -->
+    <div id="neon-lines"></div>
+
+    <div id="header">
+        <h1 class="title">YT的空间</h1>
+    </div>
+
+    <!-- 左侧游戏分类区域 -->
+    <div id="left-category" class="game-category">
+        <div class="category-title">在线匠心制作小游戏</div>
+        <div class="game-buttons">
+            <a href="贪吃蛇.html" class="game-btn">贪吃蛇小游戏</a>
+            <div class="coming-soon">敬请期待......</div>
+        </div>
+    </div>
+
+    <!-- 右侧游戏分类区域 -->
+    <div id="right-category" class="game-category">
+        <div class="category-title">植物大战僵尸融合版下载</div>
+        <div class="game-buttons">
+            <button id="download-btn" class="game-btn">融合版2.5雪原上半下载</button>
+            <div class="coming-soon">更多版本即将推出，请关注b站蓝飘飘fly获取最新动向，谢谢</div>
+        </div>
+    </div>
+
+    <script>
+        // 创建霓虹灯线条背景
+        const neonLines = document.getElementById('neon-lines');
+        const neonColors = ['#00fffc', '#ff00ff', '#00ff9d', '#ff3c00'];
+        
+        // 创建30条霓虹灯线条
+        for (let i = 0; i < 30; i++) {
+            const line = document.createElement('div');
+            line.className = 'neon-line';
+            
+            // 随机颜色
+            const color = neonColors[Math.floor(Math.random() * neonColors.length)];
+            line.style.background = `linear-gradient(90deg, transparent, ${color}, transparent)`;
+            line.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+            
+            // 随机位置和延迟
+            line.style.width = `${Math.random() * 100 + 50}px`;
+            line.style.left = `${Math.random() * 100}%`;
+            line.style.top = `${Math.random() * 100}%`;
+            line.style.animationDelay = `${Math.random() * 15}s`;
+            line.style.animationDuration = `${10 + Math.random() * 20}s`;
+            
+            neonLines.appendChild(line);
+        }
+
+        // 创建数据流效果
+        const dataStream = document.getElementById('data-stream');
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        
+        function createDataBit() {
+            const bit = document.createElement('div');
+            bit.className = 'data-bit';
+            
+            // 随机字符
+            const randomChar = chars[Math.floor(Math.random() * chars.length)];
+            bit.textContent = randomChar;
+            
+            // 随机位置
+            bit.style.left = `${Math.random() * 100}%`;
+            bit.style.top = `-20px`;
+            
+            // 随机动画速度和大小
+            const duration = 2 + Math.random() * 8;
+            bit.style.animationDuration = `${duration}s`;
+            bit.style.fontSize = `${10 + Math.random() * 10}px`;
+            bit.style.opacity = `${0.2 + Math.random() * 0.5}`;
+            
+            dataStream.appendChild(bit);
+            
+            // 动画结束后移除
+            setTimeout(() => {
+                bit.remove();
+            }, duration * 1000);
+        }
+        
+        // 持续创建数据流
+        setInterval(createDataBit, 100);
+        
+        // 初始创建一些数据流
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createDataBit, Math.random() * 2000);
+        }
+
+        // 下载按钮功能
+        const downloadBtn = document.getElementById('download-btn');
+        downloadBtn.addEventListener('click', function() {
+            // 保存原始文本
+            const originalText = this.textContent;
+            
+            // 更改为"下载成功"
+            this.textContent = "下载成功";
+            this.style.backgroundColor = "#4CAF50";
+            
+            // 创建虚拟下载链接
+            const link = document.createElement('a');
+            link.href = 'file:///D:/个人网站/植物大战僵尸融合版2.5雪原上半';
+            link.download = '植物大战僵尸融合版2.5雪原上半';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // 8秒后恢复原始状态
+            setTimeout(() => {
+                this.textContent = originalText;
+                this.style.backgroundColor = "rgba(0, 255, 252, 0.1)";
+            }, 8000);
+        });
+    </script>
+</body>
+</html>
