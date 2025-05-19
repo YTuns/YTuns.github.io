@@ -21,7 +21,7 @@
 
         /* 赛博朋克网格背景 */
         #grid-bg {
-            position: fixed;
+            position: fixed; 
             top: 0;
             left: 0;
             width: 100%;
@@ -103,16 +103,8 @@
             animation: neonBorderPulse 2s ease-in-out infinite alternate;
             display: flex;
             flex-direction: column;
-        }
-
-        /* 左侧分类栏 */
-        #left-category {
-            left: 10%;
-        }
-
-        /* 右侧分类栏 */
-        #right-category {
-            right: 10%;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         @keyframes neonBorderPulse {
@@ -263,21 +255,12 @@
         <h1 class="title">YT的空间</h1>
     </div>
 
-    <!-- 左侧游戏分类区域 -->
-    <div id="left-category" class="game-category">
+    <!-- 游戏分类区域 -->
+    <div class="game-category">
         <div class="category-title">在线匠心制作小游戏</div>
         <div class="game-buttons">
             <a href="贪吃蛇.html" class="game-btn">贪吃蛇小游戏</a>
             <div class="coming-soon">敬请期待......</div>
-        </div>
-    </div>
-
-    <!-- 右侧游戏分类区域 -->
-    <div id="right-category" class="game-category">
-        <div class="category-title">植物大战僵尸融合版下载</div>
-        <div class="game-buttons">
-            <button id="download-btn" class="game-btn">融合版2.5雪原上半下载</button>
-            <div class="coming-soon">更多版本即将推出，请关注b站蓝飘飘fly获取最新动向，谢谢</div>
         </div>
     </div>
 
@@ -343,31 +326,6 @@
         for (let i = 0; i < 50; i++) {
             setTimeout(createDataBit, Math.random() * 2000);
         }
-
-        // 下载按钮功能
-        const downloadBtn = document.getElementById('download-btn');
-        downloadBtn.addEventListener('click', function() {
-            // 保存原始文本
-            const originalText = this.textContent;
-            
-            // 更改为"下载成功"
-            this.textContent = "下载成功";
-            this.style.backgroundColor = "#4CAF50";
-            
-            // 创建虚拟下载链接
-            const link = document.createElement('a');
-            link.href = 'file:///D:/个人网站/植物大战僵尸融合版2.5雪原上半';
-            link.download = '植物大战僵尸融合版2.5雪原上半';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // 8秒后恢复原始状态
-            setTimeout(() => {
-                this.textContent = originalText;
-                this.style.backgroundColor = "rgba(0, 255, 252, 0.1)";
-            }, 8000);
-        });
     </script>
 </body>
 </html>
